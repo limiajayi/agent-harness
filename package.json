@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "pnpm tsx src/chat.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,5 +18,13 @@
     }
   },
   "packageManager": "pnpm@12.10.1",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "ollama": "^0.6.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
 }
