@@ -1,10 +1,7 @@
 import { stdin as input, stdout as output } from "node:process";
 import * as readline from "node:readline/promises";
 import { type Message, Ollama } from "ollama";
-
-const MODEL = "qwen3-vl:4b";
-
-type GetUserMessage = () => Promise<string | null>;
+import { type GetUserMessage, MODEL } from "./shared.js";
 
 /*
  * Reads one line from the terminal.
