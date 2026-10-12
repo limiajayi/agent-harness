@@ -4,17 +4,22 @@ I'm building an agentic AI harness following [@ghuntley's tutorial](https://gith
 
 ## How to Use
 
-### Requirements
+### Prerequisites
 
 - Ollama
 - Node
 - pnpm
 - A model that can supports tool use (in this case I've chosen Qwen3-vl:4b)
 
-Run the command in terminal
+Run this command in terminal:
 
 ```bash
 pnpm run dev
 ```
 
-Which gives you the ability to have a lovely chat with your model
+This runs `src/list_files.ts` and gives the user the ability to interact, read files and list files within a given directory.
+
+### Some limitations
+
+- Context window gets filled quickly which means it gets less accurate with every inference call
+- A local model is a lot slower than a model in the cloud
