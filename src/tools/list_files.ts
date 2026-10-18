@@ -1,7 +1,7 @@
 import { readdir } from "node:fs/promises";
 import type { ToolDefinition } from "../shared.js";
 
-const SKIPPED_DIRS = [".vscode"];
+const SKIPPED_DIRS = [".vscode", "node_modules", ".git"];
 
 /*
  * Recursive walk

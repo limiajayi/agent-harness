@@ -1,7 +1,12 @@
 import { stdin as input, stdout as output } from "node:process";
 import * as readline from "node:readline/promises";
 import { type Message, Ollama, type Tool, type ToolCall } from "ollama";
-import { type GetUserMessage, MODEL, type ToolDefinition } from "./shared.js";
+import {
+	type GetUserMessage,
+	MODEL,
+	NUM_CTX,
+	type ToolDefinition,
+} from "./shared.js";
 import { bashDefinition } from "./tools/bash_tool.js";
 import { listFilesDefinition } from "./tools/list_files.js";
 import { readFileDefinition } from "./tools/read_file.js";
@@ -66,11 +71,27 @@ class Agent {
 		const response = await this.client.chat({
 			model: MODEL,
 			messages: this.conversation,
+			think: false,
 			tools: ollamaTools,
+			options: {
+				num_ctx: NUM_CTX,
+			},
 		});
 		const seconds = ((performance.now() - start) / 1000).toFixed(1);
 
-		this.log(`Response received after ${seconds}s`);
+		const promptTokens = response.prompt_eval_count ?? 0;
+		const outputTokens = response.eval_count ?? 0;
+		const nextPrompt = promptTokens + outputTokens; // this reply joins the history
+
+		this.log(
+			`Response received after ${seconds}s | prompt: ${promptTokens} | output: ${outputTokens} | next prompt ≈ ${nextPrompt}/${NUM_CTX}`,
+		);
+
+		if (nextPrompt > NUM_CTX * 0.8) {
+			this.log(
+				"Warning: next prompt is near the context limit. Older messages may be dropped.",
+			);
+		}
 		return response.message;
 	}
 

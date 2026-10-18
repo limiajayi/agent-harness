@@ -1,6 +1,7 @@
 import type { Tool } from "ollama";
 
 export const MODEL = "qwen3-vl:4b";
+export const NUM_CTX = 1000;
 
 export type GetUserMessage = () => Promise<string | null>;
 

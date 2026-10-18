@@ -16,6 +16,7 @@ function runCommand(
 			["-c", command],
 			{
 				cwd: WORKSPACE,
+				env: { ...process.env, HOME: WORKSPACE },
 				timeout: BASH_TIMEOUT_MS,
 				maxBuffer: 10 * 1024 * 1024,
 				encoding: "utf8",
