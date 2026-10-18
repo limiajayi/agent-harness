@@ -1,10 +1,15 @@
 import { readFile } from "node:fs/promises";
 import type { ToolDefinition } from "../provider.js";
+import { isSkipped } from "../shared.js";
 
 async function readFileTool(args: Record<string, unknown>): Promise<string> {
     const path = args.path;
     if (typeof path !== "string") {
-        throw new Error("read_file needs a 'path' argument that is a string");
+        throw new Error("read_file needs a 'path' argument that is a string.");
+    }
+
+    if (isSkipped(path)) {
+        throw new Error(`"${path}" is on the ignore list and can't be read.`);
     }
 
     return readFile(path, { encoding: "utf8" });

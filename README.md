@@ -23,8 +23,8 @@ pnpm dev
 Additional, optional flags can be added to this, for example:
 
 ```bash
-pnpm dev -- --provider ollama --model qwen3:8b --verbose
-pnpm dev -- --provider gemini --model gemini-4-argon --verbose
+pnpm dev --provider ollama --model qwen3:8b --verbose
+pnpm dev --provider gemini --model gemini-4-argon --verbose
 ```
 
 This is to allow for other, additional providers to be added in the future.

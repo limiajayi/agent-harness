@@ -2,8 +2,6 @@ import path from "node:path";
 import { stdin as input, stdout as output } from "node:process";
 import * as readline from "node:readline/promises";
 
-export const SKIPPED = [".vscode", "node_modules", ".git", ".env"];
-
 export const WORKSPACE = path.resolve(
     "C:\\Users\\limia\\Desktop\\code\\projects",
 );
@@ -24,4 +22,17 @@ export function createUserMessageReader(): GetUserMessage {
             return null;
         }
     };
+}
+
+const SKIPPED = new Set([".vscode", "node_modules", ".git", ".env"]);
+
+// matches .env, .env.local, .devenv, etc
+const PATTERNS: RegExp[] = [/^\.env(\..+)?$/, /\.(pem|key)$/];
+
+export function isSkipped(relPath: string): boolean {
+    const parts = relPath.split(/[\\/]/).filter((part) => part !== "");
+
+    return parts.some(
+        (part) => SKIPPED.has(part) || PATTERNS.some((re) => re.test(part)),
+    );
 }

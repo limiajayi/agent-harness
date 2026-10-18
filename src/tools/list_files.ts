@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 import type { ToolDefinition } from "../provider.js";
-import { SKIPPED } from "../shared.js";
+import { isSkipped } from "../shared.js";
 
 /*
  * Recursive walk
@@ -17,10 +17,11 @@ async function collectEntries(root: string, relDir: string, files: string[]) {
     for (const entry of entries) {
         const relPath = relDir === "" ? entry.name : `${relDir}/${entry.name}`;
 
+        if (isSkipped(relPath)) {
+            continue;
+        }
+
         if (entry.isDirectory()) {
-            if (SKIPPED.includes(relPath)) {
-                continue;
-            }
             files.push(`${relPath}/`);
             await collectEntries(root, relPath, files);
         } else {
