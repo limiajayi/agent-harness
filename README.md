@@ -11,9 +11,10 @@ I'm building an agentic AI harness following [@ghuntley's tutorial](https://gith
 - pnpm v12
 - Any model that can supports tool use (in this case I've chosen Qwen3-vl:4b)
 
-Run this command in terminal:
+Run these command in terminal:
 
 ```bash
+pnpm i
 pnpm dev 
 ```
 
