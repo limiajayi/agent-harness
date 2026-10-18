@@ -1,14 +1,16 @@
-import type { Tool } from "ollama";
-
-export const MODEL = "qwen3-vl:4b";
-export const NUM_CTX = 1000;
+import { stdin as input, stdout as output } from "node:process";
+import * as readline from "node:readline/promises";
 
 export type GetUserMessage = () => Promise<string | null>;
 
-export type ToolDefinition = {
-	name: string;
-	description: string;
-	parameters: Tool["function"]["parameters"];
-	needsApproval: boolean;
-	function: (args: Record<string, unknown>) => Promise<string>;
-};
+export function createUserMessageReader(): GetUserMessage {
+    const rl = readline.createInterface({ input, output });
+
+    return async () => {
+        try {
+            return await rl.question("\u001b[94mYou\u001b[0m: ");
+        } catch {
+            return null;
+        }
+    };
+}
