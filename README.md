@@ -59,6 +59,10 @@ const response = await this.client.chat({
 
 ### Changing provider
 
+The local model limits can be bypassed by using a different provider (ChatGPT, Claude, Gemini, etc) that is hosted online and has better software. The harness already has in built ways to anticipate for different providers within `provider.ts` and `src/providers`
+
+Basically going from local, open model to online, closed model. This option is expensive however.
+
 ### Harness limits
 
 ### Measurements
