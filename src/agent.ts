@@ -107,7 +107,7 @@ export class Agent {
 
     async run(): Promise<void> {
         this.log("Starting chat session with tools enabled");
-        console.log("Chat with local model (Ctrl + C to quit)");
+        console.log("Chat with model (Ctrl + C to quit)");
 
         while (true) {
             const userInput = await this.getUserMessage();

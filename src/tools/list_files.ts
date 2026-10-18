@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 import type { ToolDefinition } from "../provider.js";
-import { SKIPPED_DIRS } from "../shared.js";
+import { SKIPPED } from "../shared.js";
 
 /*
  * Recursive walk
@@ -18,7 +18,7 @@ async function collectEntries(root: string, relDir: string, files: string[]) {
         const relPath = relDir === "" ? entry.name : `${relDir}/${entry.name}`;
 
         if (entry.isDirectory()) {
-            if (SKIPPED_DIRS.includes(relPath)) {
+            if (SKIPPED.includes(relPath)) {
                 continue;
             }
             files.push(`${relPath}/`);

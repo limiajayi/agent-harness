@@ -2,7 +2,7 @@ import path from "node:path";
 import { stdin as input, stdout as output } from "node:process";
 import * as readline from "node:readline/promises";
 
-export const SKIPPED_DIRS = [".vscode", "node_modules", ".git", ".env"];
+export const SKIPPED = [".vscode", "node_modules", ".git", ".env"];
 
 export const WORKSPACE = path.resolve(
     "C:\\Users\\limia\\Desktop\\code\\projects",
