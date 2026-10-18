@@ -12,6 +12,7 @@ const DEFAULT_MODELS: Record<ProviderName, string> = {
 };
 
 const { values } = parseArgs({
+    args: process.argv.slice(2).filter((arg) => arg !== "--"),
     options: {
         provider: { type: "string", default: "gemini" },
         model: { type: "string" },
