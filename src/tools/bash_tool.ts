@@ -1,10 +1,6 @@
 import { execFile } from "node:child_process";
-import path from "node:path";
 import type { ToolDefinition } from "../provider.js";
-
-const WORKSPACE = path.resolve("C:\\Users\\limia\\Desktop\\code\\projects");
-
-const BASH_TIMEOUT_MS = 30_000;
+import { BASH_TIMEOUT_MS, WORKSPACE } from "../shared.js";
 
 function runCommand(
     shell: string,

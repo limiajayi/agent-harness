@@ -8,13 +8,14 @@ import { readFileDefinition } from "./tools/read_file.js";
 
 const DEFAULT_MODELS: Record<ProviderName, string> = {
     ollama: "qwen3-vl:4b",
+    gemini: "gemini-3-flash-preview",
 };
 
 const { values } = parseArgs({
     options: {
-        provider: { type: "string", default: "ollama" },
+        provider: { type: "string", default: "gemini" },
         model: { type: "string" },
-        verbose: { type: "boolean", default: false },
+        verbose: { type: "boolean", default: true },
     },
 });
 

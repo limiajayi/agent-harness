@@ -67,7 +67,6 @@ export class GeminiModel implements ChatModel {
     private readonly client: GoogleGenAI;
 
     constructor(private readonly settings: ProviderSettings) {
-        console.log(process.env.GEMINI_API_KEY);
         if (!geminiApiKey) {
             throw new Error(
                 "GEMINI_API_KEY is not set. Add it to your environment first.",

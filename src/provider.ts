@@ -1,3 +1,4 @@
+import { GeminiModel } from "./providers/gemini.js";
 import { OllamaModel } from "./providers/ollama.js";
 
 export type ToolSpec = {
@@ -15,6 +16,7 @@ export type ToolCall = {
     id: string;
     name: string;
     args: Record<string, unknown>;
+    raw?: unknown;
 };
 
 export type ChatMessage =
@@ -48,6 +50,8 @@ export function createModel(
     switch (provider) {
         case "ollama":
             return new OllamaModel(settings);
+        case "gemini":
+            return new GeminiModel(settings);
         default:
             throw new Error(`Unknown provider: ${provider as string}`);
     }
