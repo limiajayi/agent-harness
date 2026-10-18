@@ -6,18 +6,27 @@ I'm building an agentic AI harness following [@ghuntley's tutorial](https://gith
 
 ### Prerequisites
 
-- Ollama
-- Node
-- pnpm
-- A model that can supports tool use (in this case I've chosen Qwen3-vl:4b)
+- Ollama v0.4
+- Node v24
+- pnpm v12
+- Any model that can supports tool use (in this case I've chosen Qwen3-vl:4b)
 
 Run this command in terminal:
 
 ```bash
-pnpm run dev
+pnpm dev 
 ```
 
-This runs `src/list_files.ts` and gives the user the ability to interact, read files and list files within a given directory.
+### Options
+
+Additional, optional flags can be added to this, for example:
+
+```bash
+pnpm dev -- --provider ollama --model qwen3:8b --verbose
+pnpm dev -- --provider gemini --model gemini-4-argon --verbose
+```
+
+This is to allow for other, additional providers to be added in the future.
 
 ## Getting by limitations
 
@@ -47,8 +56,8 @@ const response = await this.client.chat({
     });
 ```
 
+### Changing provider
+
 ### Harness limits
 
 ### Measurements
-
-### Changing provider
