@@ -6,6 +6,11 @@ export type ToolSpec = {
     parameters: Record<string, unknown>;
 };
 
+export type ToolDefinition = ToolSpec & {
+    needsApproval: boolean;
+    function: (args: Record<string, unknown>) => Promise<string>;
+};
+
 export type ToolCall = {
     id: string;
     name: string;
