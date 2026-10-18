@@ -1,7 +1,6 @@
 import { readdir } from "node:fs/promises";
-import type { ToolDefinition } from "../shared.js";
-
-const SKIPPED_DIRS = [".vscode"];
+import type { ToolDefinition } from "../provider.js";
+import { isSkipped } from "../shared.js";
 
 /*
  * Recursive walk
@@ -10,56 +9,57 @@ const SKIPPED_DIRS = [".vscode"];
  * ("" means the root itself)
  */
 async function collectEntries(root: string, relDir: string, files: string[]) {
-	const fullDir = relDir === "" ? root : `${root}/${relDir}`;
-	const entries = await readdir(fullDir, { withFileTypes: true });
+    const fullDir = relDir === "" ? root : `${root}/${relDir}`;
+    const entries = await readdir(fullDir, { withFileTypes: true });
 
-	entries.sort((a, b) => a.name.localeCompare(b.name));
+    entries.sort((a, b) => a.name.localeCompare(b.name));
 
-	for (const entry of entries) {
-		const relPath = relDir === "" ? entry.name : `${relDir}/${entry.name}`;
+    for (const entry of entries) {
+        const relPath = relDir === "" ? entry.name : `${relDir}/${entry.name}`;
 
-		if (entry.isDirectory()) {
-			if (SKIPPED_DIRS.includes(relPath)) {
-				continue;
-			}
-			files.push(`${relPath}/`);
-			await collectEntries(root, relPath, files);
-		} else {
-			files.push(relPath);
-		}
-	}
+        if (isSkipped(relPath)) {
+            continue;
+        }
+
+        if (entry.isDirectory()) {
+            files.push(`${relPath}/`);
+            await collectEntries(root, relPath, files);
+        } else {
+            files.push(relPath);
+        }
+    }
 }
 
 async function listFilesTool(args: Record<string, unknown>): Promise<string> {
-	const path = args.path;
+    const path = args.path;
 
-	if (path !== undefined && typeof path !== "string") {
-		throw new Error("list_files 'path' must be a string when provided");
-	}
+    if (path !== undefined && typeof path !== "string") {
+        throw new Error("list_files 'path' must be a string when provided");
+    }
 
-	const dir = typeof path === "string" && path !== "" ? path : ".";
+    const dir = typeof path === "string" && path !== "" ? path : ".";
 
-	const files: string[] = [];
-	await collectEntries(dir, "", files);
+    const files: string[] = [];
+    await collectEntries(dir, "", files);
 
-	return JSON.stringify(files);
+    return JSON.stringify(files);
 }
 
 export const listFilesDefinition: ToolDefinition = {
-	name: "list_files",
-	description:
-		"List files and directories at a given path. If no path is provided, lists files in the current directory",
-	parameters: {
-		type: "object",
-		required: [],
-		properties: {
-			path: {
-				type: "string",
-				description:
-					"Optional relative path to list files from. Defaults to current directory if not provided.",
-			},
-		},
-	},
-	needsApproval: false,
-	function: listFilesTool,
+    name: "list_files",
+    description:
+        "List files and directories at a given path. If no path is provided, lists files in the current directory",
+    parameters: {
+        type: "object",
+        required: [],
+        properties: {
+            path: {
+                type: "string",
+                description:
+                    "Optional relative path to list files from. Defaults to current directory if not provided.",
+            },
+        },
+    },
+    needsApproval: false,
+    function: listFilesTool,
 };

@@ -1,32 +1,33 @@
 {
-	"name": "harness",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"dev": "pnpm tsx src/list_files.ts",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "12.10.1",
-			"onFail": "download"
-		}
-	},
-	"packageManager": "pnpm@12.10.1",
-	"type": "module",
-	"dependencies": {
-		"ollama": "^0.6.4"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
-		"@types/node": "^26.6.5",
-		"lefthook": "^2.2.1",
-		"tsx": "^4.23.15",
-		"typescript": "^7.0.2"
-	}
+    "name": "harness",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "tsx --env-file-if-exists=.env src/index.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devEngines": {
+        "packageManager": {
+            "name": "pnpm",
+            "version": "12.10.1",
+            "onFail": "download"
+        }
+    },
+    "packageManager": "pnpm@12.10.1",
+    "type": "module",
+    "dependencies": {
+        "@google/genai": "^2.30.0",
+        "ollama": "^0.6.4"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.5.15",
+        "@types/node": "^26.6.5",
+        "lefthook": "^2.2.1",
+        "tsx": "^4.23.15",
+        "typescript": "^7.0.2"
+    }
 }

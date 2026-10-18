@@ -1,4 +1,6 @@
 minimumReleaseAge: 1440 # minutes so 1 days
 allowBuilds:
+  '@google/genai': true
   esbuild: true
   lefthook: true
+  protobufjs: true
