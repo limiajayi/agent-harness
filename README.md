@@ -2,6 +2,8 @@
 
 I'm building an agentic AI harness following [@ghuntley's tutorial](https://github.com/ghuntley/how-to-build-a-coding-agent) on building an agent, except it's in Typescript using Ollama with Qwen3-vl:4b as my chosen model.
 
+[![Architecture diagram of limiajayi/agent-harness](https://gitdiagram.com/limiajayi/agent-harness/diagram.png)](https://gitdiagram.com/limiajayi/agent-harness?utm_source=readme&utm_medium=picture)
+
 ## How to Use
 
 ### Prerequisites
