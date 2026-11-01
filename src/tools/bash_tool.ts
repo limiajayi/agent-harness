@@ -30,7 +30,7 @@ function runCommand(
 
 function resolveBashPath(): string {
     if (process.platform === "win32") {
-        return "C:\\Users\\Public\\Desktop\\Git Bash.lnk";
+        return `${process.env.MAIN_PATH}\\Git\\bin\\bash.exe`;
     }
     if (process.env.BASH_PATH) {
         return process.env.BASH_PATH;

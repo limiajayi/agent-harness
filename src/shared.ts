@@ -3,7 +3,7 @@ import { stdin as input, stdout as output } from "node:process";
 import * as readline from "node:readline/promises";
 
 export const WORKSPACE = path.resolve(
-    "C:\\Users\\limia\\Desktop\\code\\projects",
+    `${process.env.MAIN_PATH}\\code\\projects`,
 );
 
 export const BASH_TIMEOUT_MS = 30_000;
