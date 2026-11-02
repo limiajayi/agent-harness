@@ -60,7 +60,7 @@ export function toToolDefinition(
     tool: McpToolInfo,
 ): ToolDefinition {
     return {
-        name: `${serverName}_$${tool.name}`,
+        name: `${serverName}__${tool.name}`,
         description: tool.description ?? tool.title ?? tool.name,
         parameters: tool.inputSchema ?? { type: "object", properties: {} },
         needsApproval: tool.annotations?.readOnlyHint !== true,
