@@ -1,5 +1,8 @@
 import { parseArgs } from "node:util";
 import { Agent } from "./agent.js";
+import type { McpServerConfig } from "./mcp/client.js";
+import { githubServerConfig } from "./mcp/config.js";
+import { startMcpServers } from "./mcp/manager.js";
 import { createModel, PROVIDERS, type ProviderName } from "./provider.js";
 import { createUserMessageReader } from "./shared.js";
 import { bashDefinition } from "./tools/bash_tool.js";
@@ -17,6 +20,7 @@ const { values } = parseArgs({
         provider: { type: "string", default: "ollama" },
         model: { type: "string" },
         verbose: { type: "boolean", default: false },
+        "github-write": { type: "boolean", default: false },
     },
 });
 
@@ -25,6 +29,7 @@ function isProvider(name: string): name is ProviderName {
 }
 
 async function main(): Promise<void> {
+    // provider
     const providerName = values.provider;
 
     if (!isProvider(providerName)) {
@@ -35,6 +40,7 @@ async function main(): Promise<void> {
         return;
     }
 
+    // model
     const model = createModel(providerName, {
         model: values.model ?? DEFAULT_MODELS[providerName],
         numCtx: 3000,
@@ -48,8 +54,34 @@ async function main(): Promise<void> {
         );
     }
 
+    // mcp
+    const log = (message: string): void => {
+        if (isVerbose) console.error(`[verbose] ${message}`);
+    };
+
+    const mcpConfigs: McpServerConfig[] = [];
+    const github = githubServerConfig({ readOnly: !values["github-write"] });
+
+    if (github) {
+        mcpConfigs.push(github);
+    } else {
+        console.error("github pat is not set; skipping Github MCP Server");
+    }
+
+    const mcp = await startMcpServers(mcpConfigs, log);
+    process.once("SIGINT", () => {
+        void mcp.shutdown().finally(() => process.exit(130));
+    });
+
+    // agent setup
+
     const getUserMessage = createUserMessageReader();
-    const tools = [readFileDefinition, listFilesDefinition, bashDefinition];
+    const tools = [
+        readFileDefinition,
+        listFilesDefinition,
+        bashDefinition,
+        ...mcp.tools,
+    ];
 
     const agent = new Agent(model, getUserMessage, tools, isVerbose);
 
@@ -59,6 +91,8 @@ async function main(): Promise<void> {
         const error = err instanceof Error ? err.message : String(err);
         console.error(`Error: ${error}`);
         process.exitCode = 1;
+    } finally {
+        await mcp.shutdown();
     }
 }
 

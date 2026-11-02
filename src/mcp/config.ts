@@ -72,5 +72,6 @@ export function githubServerConfig(
         args,
         env: { ...pickEnv(BASE_ENV_KEYS), GITHUB_PERSONAL_ACCESS_TOKEN: token },
         secrets: [token],
+        requestTimeoutMs: 10_000,
     };
 }

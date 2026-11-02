@@ -16,7 +16,6 @@ export async function startMcpServers(
     const perServer = await Promise.all(
         configs.map(async (config): Promise<ToolDefinition[]> => {
             const client = new McpStdioClient(config, log);
-
             try {
                 if (!/^[a-zA-Z0-9_-]+$/.test(config.name)) {
                     throw new Error(`invalid server name "${config.name}"`);
@@ -27,11 +26,9 @@ export async function startMcpServers(
                     ? await client.listTools()
                     : [];
                 clients.push(client);
-
                 log(
                     `[mcp:${config.name}] ${tools.length} tool(s): ${tools.map((t) => t.name).join(", ")}`,
                 );
-
                 return tools.map((t) =>
                     toToolDefinition(client, config.name, t),
                 );
@@ -47,12 +44,8 @@ export async function startMcpServers(
         }),
     );
 
-    // backup for if the process dies without a graceful shutdown, kill children
-    process.once("exit", () =>
-        clients.forEach((c) => {
-            c.killNow();
-        }),
-    );
+    // Backstop: if the process dies without a graceful shutdown, kill children.
+    process.once("exit", () => clients.forEach((c) => c.killNow()));
 
     let shuttingDown: Promise<void> | undefined;
     return {

@@ -21,7 +21,7 @@ export type McpToolInfo = {
     title?: string;
     description?: string;
     inputSchema?: Record<string, unknown>;
-    annotations?: { readOnlyHint?: boolean; desctructiveHint?: boolean };
+    annotations?: { readOnlyHint?: boolean; destructiveHint?: boolean };
 };
 
 type InitializeResult = {
@@ -76,8 +76,9 @@ export class McpStdioClient {
     private onStdout(chunk: string): void {
         // a chunk can hold half a message or several, buffer and split on \n
         this.stdoutBuffer += chunk;
-        const index: number = this.stdoutBuffer.indexOf("\n");
-        while (index >= 0) {
+        for (;;) {
+            const index = this.stdoutBuffer.indexOf("\n");
+            if (index < 0) break;
             const line = this.stdoutBuffer.slice(0, index).trim();
             this.stdoutBuffer = this.stdoutBuffer.slice(index + 1);
             if (line) this.handleLine(line);
@@ -102,6 +103,8 @@ export class McpStdioClient {
                     `${pending.method} failed (${err.code}): ${err.message}`,
                 ),
             );
+        } else {
+            pending.resolve(msg.result);
         }
     }
 
@@ -214,6 +217,7 @@ export class McpStdioClient {
                 tools: McpToolInfo[];
                 nextCursor?: string;
             }>("tools/list", cursor ? { cursor } : undefined);
+            tools.push(...page.tools);
             cursor = page.nextCursor; // pagination, like ?page= in REST
         } while (cursor);
         return tools;
