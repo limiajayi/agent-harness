@@ -1,7 +1,7 @@
 import { parseArgs } from "node:util";
 import { Agent } from "./agent.js";
 import type { McpServerConfig } from "./mcp/client.js";
-import { githubServerConfig } from "./mcp/config.js";
+import { exaServerConfig, githubServerConfig } from "./mcp/config.js";
 import { startMcpServers } from "./mcp/manager.js";
 import { createModel, PROVIDERS, type ProviderName } from "./provider.js";
 import { createUserMessageReader } from "./shared.js";
@@ -65,8 +65,14 @@ async function main(): Promise<void> {
     if (github) {
         mcpConfigs.push(github);
     } else {
-        console.error("github pat is not set; skipping Github MCP Server");
+        console.error(
+            "GITHUB_PERSONAL_ACCESS_TOKEN is not set; skipping Github MCP Server",
+        );
     }
+
+    const exa = exaServerConfig();
+    if (exa) mcpConfigs.push(exa);
+    else console.error("EXA_API_KEY is not set; skipping Exa MCP Server");
 
     const mcp = await startMcpServers(mcpConfigs, log);
     process.once("SIGINT", () => {

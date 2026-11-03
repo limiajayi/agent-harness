@@ -75,3 +75,32 @@ export function githubServerConfig(
         requestTimeoutMs: 10_000,
     };
 }
+
+// exa config
+
+export function exaServerConfig(): McpServerConfig | undefined {
+    const key = process.env.EXA_API_KEY;
+    if (!key) return undefined;
+
+    const args = [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "EXA_API_KEY",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "exa-mcp:3.4.3",
+    ];
+
+    return {
+        name: "exa",
+        command: "docker",
+        args,
+        env: { ...pickEnv(BASE_ENV_KEYS), EXA_API_KEY: key },
+        secrets: [key],
+        requestTimeoutMs: 90_000,
+    };
+}

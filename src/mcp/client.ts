@@ -14,6 +14,7 @@ export type McpServerConfig = {
     env: Record<string, string>;
     secrets: string[];
     requestTimeoutMs?: number;
+    cwd?: string;
 };
 
 export type McpToolInfo = {
@@ -265,6 +266,7 @@ export class McpStdioClient {
         const launch = resolveLaunch(command, args);
         const child = spawn(launch.command, launch.args, {
             env,
+            cwd: this.config.cwd,
             stdio: ["pipe", "pipe", "pipe"],
             windowsHide: true,
         });
