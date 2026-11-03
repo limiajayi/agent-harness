@@ -80,6 +80,8 @@ docker build -t exa-mcp:3.4.3 docker/exa
 pnpm dev
 ```
 
+End the conversation with CTRL + C. A quick `docker ps` check in terminal should show no containers running after the conversation has ended.
+
 ### Options
 
 Additional, optional flags can be added to this, for example:
