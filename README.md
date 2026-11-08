@@ -2,6 +2,8 @@
 
 I'm building an agentic AI harness following [@ghuntley's tutorial](https://github.com/ghuntley/how-to-build-a-coding-agent) on building an agent, except it's in TypeScript and works with more than one model provider (Ollama with Qwen3-vl:4b locally, or Gemini in the cloud). On top of the tutorial's core loop I've added an MCP client, so the agent can use tools from MCP servers (currently GitHub and Exa web search) exactly like its built-in tools.
 
+<img src="./demos/demo.gif" alt="Demo of the agent harness in action" />
+
 [![Architecture diagram of limiajayi/agent-harness](https://gitdiagram.com/limiajayi/agent-harness/diagram.png)](https://gitdiagram.com/limiajayi/agent-harness?utm_source=readme&utm_medium=picture)
 
 ## Project layout
@@ -223,11 +225,3 @@ const response = await this.client.chat({
 The local model limits can be bypassed by using a different provider (ChatGPT, Claude, Gemini, etc) that is hosted online and has better software. The harness already has in built ways to anticipate for different providers within `provider.ts` and `src/providers`
 
 Basically going from local, open model to online, hosted model. This option can get expensive quickly.
-
-### Harness limits
-
-TBD
-
-### Measurements
-
-TBD
