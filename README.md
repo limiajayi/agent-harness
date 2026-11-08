@@ -2,7 +2,7 @@
 
 I'm building an agentic AI harness following [@ghuntley's tutorial](https://github.com/ghuntley/how-to-build-a-coding-agent) on building an agent, except it's in TypeScript and works with more than one model provider (Ollama with Qwen3-vl:4b locally, or Gemini in the cloud). On top of the tutorial's core loop I've added an MCP client, so the agent can use tools from MCP servers (currently GitHub and Exa web search) exactly like its built-in tools.
 
-<img src="./demos/demo.gif" alt="Demo of the agent harness in action" />
+<img src="./demo/demo.gif" alt="Demo of the agent harness in action" />
 
 [![Architecture diagram of limiajayi/agent-harness](https://gitdiagram.com/limiajayi/agent-harness/diagram.png)](https://gitdiagram.com/limiajayi/agent-harness?utm_source=readme&utm_medium=picture)
 
