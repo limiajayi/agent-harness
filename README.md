@@ -89,8 +89,16 @@ End the conversation with CTRL + C. A quick `docker ps` check in terminal should
 Additional, optional flags can be added to this, for example:
 
 ```bash
+# open source models
 pnpm dev --provider ollama --model qwen3:8b --verbose
-pnpm dev --provider gemini --model gemini-3-flash-preview --verbose
+
+# gemini
+pnpm dev --provider gemini --model gemini-4-hydrogen --verbose
+pnpm dev --provider gemini --model gemini-3-flash-preview
+pnpm dev --provider gemini --model gemini-3.8-flash
+pnpm dev --provider gemini --model gemini-3.5-flash-lite
+
+# github write
 pnpm dev --provider gemini --github-write   # also expose GitHub write tools (each still asks for approval)
 ```
 
