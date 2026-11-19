@@ -24,7 +24,16 @@ export function createUserMessageReader(): GetUserMessage {
     };
 }
 
-const SKIPPED = new Set([".vscode", "node_modules", ".git", ".env"]);
+export const IGNORE_LIST = [
+    ".vscode",
+    "node_modules",
+    ".git",
+    ".env",
+    ".env.*",
+    "*.pem",
+    "*.key",
+];
+const SKIPPED = new Set(IGNORE_LIST);
 
 // matches .env, .env.local, .devenv, etc
 const PATTERNS: RegExp[] = [/^\.env(\..+)?$/, /\.(pem|key)$/];
