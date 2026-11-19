@@ -6,6 +6,7 @@ import { startMcpServers } from "./mcp/manager.js";
 import { createModel, PROVIDERS, type ProviderName } from "./provider.js";
 import { createUserMessageReader } from "./shared.js";
 import { bashDefinition } from "./tools/bash_tool.js";
+import { editFileDefinition } from "./tools/edit_file.js";
 import { listFilesDefinition } from "./tools/list_files.js";
 import { readFileDefinition } from "./tools/read_file.js";
 
@@ -86,6 +87,7 @@ async function main(): Promise<void> {
         readFileDefinition,
         listFilesDefinition,
         bashDefinition,
+        editFileDefinition,
         ...mcp.tools,
     ];
 
