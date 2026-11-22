@@ -14,6 +14,7 @@ import { readFileDefinition } from "./tools/read_file.js";
 const DEFAULT_MODELS: Record<ProviderName, string> = {
     ollama: "qwen3-vl:4b",
     gemini: "gemini-3-flash-preview",
+    claude: "claude-haiku-5-5",
 };
 
 const { values } = parseArgs({
