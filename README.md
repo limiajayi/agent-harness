@@ -98,6 +98,9 @@ pnpm dev --provider gemini --model gemini-3-flash-preview
 pnpm dev --provider gemini --model gemini-3.8-flash
 pnpm dev --provider gemini --model gemini-3.5-flash-lite
 
+#claude
+pnpm dev --provider claude --model claude-sonnet-5-5
+
 # github write
 pnpm dev --provider gemini --github-write   # also expose GitHub write tools (each still asks for approval)
 ```

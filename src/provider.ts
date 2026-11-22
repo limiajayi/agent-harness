@@ -1,3 +1,4 @@
+import { ClaudeModel } from "./providers/claude.js";
 import { GeminiModel } from "./providers/gemini.js";
 import { OllamaModel } from "./providers/ollama.js";
 
@@ -34,7 +35,7 @@ export interface ChatModel {
     complete(messages: ChatMessage[], tools: ToolSpec[]): Promise<ModelReply>;
 }
 
-export const PROVIDERS = ["ollama", "gemini"];
+export const PROVIDERS = ["ollama", "gemini", "claude"];
 
 export type ProviderName = (typeof PROVIDERS)[number];
 
@@ -52,6 +53,8 @@ export function createModel(
             return new OllamaModel(settings);
         case "gemini":
             return new GeminiModel(settings);
+        case "claude":
+            return new ClaudeModel(settings);
         default:
             throw new Error(`Unknown provider: ${provider as string}`);
     }
